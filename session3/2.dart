@@ -6,47 +6,47 @@
 void main() {
   List<String> groceryList = [];
 
-  // Add item to list
-  void addItem(String item) {
-    if (item.isNotEmpty) {
-      groceryList.add(item);
-      print('$item added to the list.');
-    } else {
-      print('Cannot add empty item.');
-    }
-  }
-
-  // Remove item from list
-  void removeItem(String item) {
-    if (groceryList.contains(item)) {
-      groceryList.remove(item);
-      print('$item removed from the list.');
-    } else {
-      print('$item not found in the list.');
-    }
-  }
-
-  // Display all items
-  void displayItems() {
-    if (groceryList.isEmpty) {
-      print('The grocery list is empty.');
-    } else {
-      print('Grocery List:');
-      for (var item in groceryList) {
-        print('- $item');
-      }
-    }
-  }
-
   // Test the functions
-  addItem('Milk');
-  addItem('Bread');
-  addItem('Eggs');
-  displayItems();
+  addItem('Milk', groceryList);
+  addItem('Bread', groceryList);
+  addItem('Eggs', groceryList);
+  displayItems(groceryList);
 
-  removeItem('Bread');
-  displayItems();
+  removeItem('Bread', groceryList);
+  displayItems(groceryList);
 
-  removeItem('Butter'); // Item not in list
-  displayItems();
+  removeItem('Butter', groceryList); // Item not in list
+  displayItems(groceryList);
+}
+
+// Add item to list
+void addItem(String item, List<String> groceryList) {
+  if (item.isNotEmpty) {
+    groceryList.add(item);
+    print('$item added to the list.');
+  } else {
+    print('Cannot add empty item.');
+  }
+}
+
+// Remove item from list
+void removeItem(String item, List<String> groceryList) {
+  if (groceryList.contains(item)) {
+    groceryList.remove(item);
+    print('$item removed from the list.');
+  } else {
+    print('$item not found in the list.');
+  }
+}
+
+// Display all items
+void displayItems(List<String> groceryList) {
+  if (groceryList.isEmpty) {
+    print('The grocery list is empty.');
+  } else {
+    print('Grocery List:');
+    for (var item in groceryList) {
+      print('- $item');
+    }
+  }
 }
