@@ -10,7 +10,7 @@
 void main() {
   String name = "Alice";
   // The following line will cause an error because name is a String and cannot hold an integer.
-  name = 123;
+  //name = 123;
   print(name);
 }
 

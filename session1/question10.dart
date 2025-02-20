@@ -3,6 +3,6 @@
 // it will throw a error indicating that the variable is not defined.
 
 void main() {
-  print(variable);
-  int variable = 10; // declare and initialize variable
+  int variable = 10;
+  print(variable); // declare and initialize variable
 }
