@@ -3,7 +3,6 @@
  Create a list of numbers. Iterate over the list and:- If a number is even, print "Even: <number>".
  - If a number is odd, print "Odd: <numbe
 */
-import 'dart:io';
 
 void main() {
   List<int> numbers = [5, 9, 10, 12, 6, 7, 80];

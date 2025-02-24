@@ -4,7 +4,6 @@
  Accepts a list of names.- Returns a Set containing only unique names.
  Call the function inside `main()` and print the result.
 */
-import 'dart:io';
 
 void main() {
   List<String> names = [
