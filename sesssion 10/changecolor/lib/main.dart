@@ -16,7 +16,7 @@ class MyApp extends StatefulWidget {
 class _MyAppState extends State<MyApp> {
   int currentValue = 19;
   Color currentColor = const Color.fromARGB(255, 168, 41, 41);
-  String numType = '';
+  String numType = 'Odd:';
   bool textsize = false;
   int fontsize = 18;
   // This widget is the root of your application.
