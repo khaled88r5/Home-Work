@@ -1,14 +1,9 @@
 import 'package:audioplayers/audioplayers.dart';
 
 class Items {
-  String? image;
-  String enName;
-  String? jbName;
-  String sound;
+  String itemName;
 
-  Items({this.image, required this.enName, this.jbName, required this.sound});
-  playSound() {
-    final player = AudioPlayer();
-    player.play(AssetSource(sound));
-  }
+  String description;
+
+  Items({required this.itemName, required this.description});
 }
