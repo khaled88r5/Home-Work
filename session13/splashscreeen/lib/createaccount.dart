@@ -1,6 +1,9 @@
+// ignore_for_file: unused_import
+
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:splashscreeen/assets.dart';
+import 'package:splashscreeen/textbox.dart';
 import 'package:splashscreeen/textstyles.dart';
 
 class CreateAccount extends StatefulWidget {
@@ -33,7 +36,7 @@ class _CreateAccountState extends State<CreateAccount> {
               ),
               Container(
                 width: double.infinity,
-                height: 400,
+                height: 550,
                 decoration: BoxDecoration(
                     color: Colors.yellow,
                     borderRadius: BorderRadius.only(
@@ -43,66 +46,41 @@ class _CreateAccountState extends State<CreateAccount> {
                 child: Padding(
                   padding: const EdgeInsets.only(top: 20.0),
                   child: Column(children: [
-                    Row(children: [
-                      Text(
-                        'create your new account ',
-                        style: AppTextStyles.poppinsSemiBold20,
-                      ),
-                      Spacer(),
-                      Icon(Icons.close)
-                    ]),
-                    Padding(
-                      padding: const EdgeInsets.only(top: 15.0),
-                      child: Row(children: [
-                        Padding(
-                          padding: const EdgeInsets.only(left: 35),
-                          child: Container(
-                              height: 39,
-                              width: 150,
-                              decoration: BoxDecoration(
-                                  color: Colors.white,
-                                  borderRadius: BorderRadius.circular(30),
-                                  border: Border.all(
-                                      width: 1, color: Colors.black)),
-                              child: Center(child: Text('data'))),
+                    Row(
+                      children: [
+                        CustomTextField(
+                          width: 200,
+                          obscureText: false,
+                          hintText: "Email",
+                          suffixIcon: null,
+                          hintStyle: AppTextStyles.interRegular16,
+                          style: AppTextStyles.interRegular16,
                         ),
-                        Padding(
-                          padding: const EdgeInsets.only(
-                            left: 40.0,
-                          ),
-                          child: Container(
-                              height: 39,
-                              width: 150,
-                              decoration: BoxDecoration(
-                                  color: Colors.white,
-                                  borderRadius: BorderRadius.circular(30),
-                                  border: Border.all(
-                                      width: 1, color: Colors.black)),
-                              child: Center(child: Text('data'))),
+                        CustomTextField(
+                          width: 200,
+                          obscureText: false,
+                          hintText: "Email",
+                          suffixIcon: null,
+                          hintStyle: AppTextStyles.interRegular16,
+                          style: AppTextStyles.interRegular16,
                         ),
-                      ]),
+                      ],
                     ),
-                    Padding(
-                      padding: const EdgeInsets.only(top: 25.0),
-                      child: TextFormField(
-                        decoration: InputDecoration(
-                          enabledBorder: OutlineInputBorder(
-                            borderSide: BorderSide(
-                              color: Colors.black,
-                            ),
-                            borderRadius: BorderRadius.circular(30),
-                          ),
-                          focusedBorder: OutlineInputBorder(
-                            borderSide: BorderSide(
-                              color: Colors.black,
-                            ),
-                            borderRadius: BorderRadius.circular(30),
-                          ),
-                          labelText: 'Name',
-                          labelStyle: AppTextStyles.poppinsRegular16,
-                        ),
-                        style: AppTextStyles.poppinsRegular16,
-                      ),
+                    CustomTextField(
+                      width: 400,
+                      obscureText: false,
+                      hintText: "Email",
+                      suffixIcon: null,
+                      hintStyle: AppTextStyles.interRegular16,
+                      style: AppTextStyles.interRegular16,
+                    ),
+                    CustomTextField(
+                      width: 300,
+                      obscureText: false,
+                      hintText: "Email",
+                      suffixIcon: null,
+                      hintStyle: AppTextStyles.interRegular16,
+                      style: AppTextStyles.interRegular16,
                     ),
                   ]),
                 ),

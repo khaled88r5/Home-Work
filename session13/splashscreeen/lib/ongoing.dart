@@ -1,3 +1,5 @@
+// ignore_for_file: unused_import
+
 import 'package:flutter_svg/svg.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 

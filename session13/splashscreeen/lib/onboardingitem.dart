@@ -1,3 +1,5 @@
+// ignore_for_file: unused_import
+
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
@@ -20,8 +22,6 @@ class OnboardingPage extends StatefulWidget {
 }
 
 class _OnboardingPageState extends State<OnboardingPage> {
-  final PageController _controller = PageController();
-
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -32,10 +32,14 @@ class _OnboardingPageState extends State<OnboardingPage> {
           SvgPicture.asset(widget.image, height: 250),
           const SizedBox(height: 30),
           Text(widget.title,
+              textAlign: TextAlign.center,
               style:
                   const TextStyle(fontSize: 22, fontWeight: FontWeight.bold)),
           const SizedBox(height: 10),
-          Text(widget.subtitle, textAlign: TextAlign.center),
+          Text(
+            widget.subtitle,
+            textAlign: TextAlign.center,
+          ),
           const SizedBox(height: 20),
         ],
       ),
