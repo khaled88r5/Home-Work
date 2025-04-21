@@ -1,37 +1,47 @@
 import 'package:flutter/material.dart';
-import 'package:newproject/models/Qlist.dart';
-import 'package:newproject/models/InteractiveQuestionnaire.dart'; // Ensure this file contains the InteractiveQuestionnaire widget
-import 'answerpreview.dart';
+import 'package:newproject/constants/styles.dart';
+import 'package:newproject/data/question_list.dart';
+import 'package:newproject/widgets/interactive_questionnaire.dart';
+import 'package:newproject/widgets/quiz_buttons.dart';
 import '../constants/assets.dart';
 
-class quizscreen extends StatefulWidget {
+class QuizScreen extends StatefulWidget {
+  const QuizScreen({Key? key}) : super(key: key);
+
   @override
-  _quizscreenState createState() => _quizscreenState();
+  _QuizScreenState createState() => _QuizScreenState();
 }
 
-class _quizscreenState extends State<quizscreen> {
+class _QuizScreenState extends State<QuizScreen> {
   final PageController _controller = PageController();
   int currentIndex = 0;
 
-  // List to store the keys for each question
-  List<GlobalKey<InteractiveQuestionnaireState>> questionKeys = [];
-
   // List of InteractiveQuestionnaire widgets
   List<InteractiveQuestionnaire> questions = [];
-
-  Map<String, String> answers = {}; // Map to store answers
+  
+  // Map to store selected answers for each question
+  Map<int, List<String>> selectedAnswers = {};
+  
+  Map<String, String> answers = {}; // Map to store final answers
+  Map<String, bool> answerStatus = {}; // Map to store whether answers are correct
 
   @override
   void initState() {
     super.initState();
 
     // Define the list of questions dynamically
-    questions = QuestionnaireList().questions;
+    questions = QuestionnaireList.fromIndex(
+      currentIndex: currentIndex,
+      onAnswersChanged: (index, answers) {
+        setState(() {
+          selectedAnswers[index] = answers;
+        });
+      },
+    ).questions;
 
-    // Initialize the keys for each question
+    // Initialize selected answers for each question
     for (int i = 0; i < questions.length; i++) {
-      questionKeys.add(questions[i].key as GlobalKey<
-          InteractiveQuestionnaireState>); // Adding the key of each widget
+      selectedAnswers[i] = [];
     }
   }
 
@@ -52,6 +62,44 @@ class _quizscreenState extends State<quizscreen> {
           // Questionnaire Content
           Column(
             children: [
+              Padding(
+                padding: const EdgeInsets.only(top: 70, left: 10, bottom: 25),
+                child: Container(
+                  width: 130,
+                  height: 35,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(100),
+                    color: AppColors.secondary,
+                  ),
+                  child: Center(
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: [
+                        Container(
+                          width: 10,
+                          height: 10,
+                          child: CircularProgressIndicator(
+                            value: currentIndex / questions.length,
+                            valueColor: AlwaysStoppedAnimation<Color>(
+                                AppColors.primary),
+                            strokeWidth: 2,
+                            strokeCap: StrokeCap.round,
+                          ),
+                        ),
+                        Text(
+                          'Question ${currentIndex + 1} ',
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 16,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ),
+
               Expanded(
                 child: PageView(
                   physics: NeverScrollableScrollPhysics(),
@@ -64,91 +112,20 @@ class _quizscreenState extends State<quizscreen> {
                 ),
               ),
               // Buttons
-              Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 20),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      // Back Button
-                      Padding(
-                        padding: const EdgeInsets.only(left: 14.0),
-                        child: ElevatedButton(
-                          onPressed: () {
-                            _controller.previousPage(
-                              duration: Duration(milliseconds: 500),
-                              curve: Curves.ease,
-                            );
-                          },
-                          style: ElevatedButton.styleFrom(
-                            backgroundColor:
-                                const Color.fromARGB(0, 142, 132, 255),
-                            side: BorderSide(color: Colors.white),
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(10),
-                            ),
-                          ),
-                          child: Row(
-                            children: [
-                              Icon(
-                                Icons.arrow_back_ios,
-                                color: Colors.white,
-                                size: 16,
-                              ),
-                              Text(
-                                "Back",
-                                style: TextStyle(color: Colors.white),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ),
-                      // Next Button
-                      Padding(
-                        padding: const EdgeInsets.only(right: 14.0),
-                        child: ElevatedButton(
-                          onPressed: () {
-                            // Get the current question and save its answer dynamically
-                            answers[questions[currentIndex].question] =
-                                '(${questionKeys[currentIndex].currentState?.selectedAnswers.join(', ')})';
-                            if (currentIndex < questions.length - 1) {
-                              _controller.nextPage(
-                                duration: Duration(milliseconds: 500),
-                                curve: Curves.ease,
-                              );
-                            } else {
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => AnswerPreview(
-                                          answers: answers,
-                                        )),
-                              );
-                            }
-                          },
-                          style: ElevatedButton.styleFrom(
-                            backgroundColor: Color(0xFF8E84FF),
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(10),
-                            ),
-                          ),
-                          child: Row(
-                            children: [
-                              Text(
-                                "Next",
-                                style: TextStyle(color: Colors.white),
-                              ),
-                              SizedBox(width: 5),
-                              Icon(
-                                Icons.arrow_forward_ios,
-                                color: Colors.white,
-                                size: 18,
-                              ),
-                            ],
-                          ),
-                        ),
-                      ),
-                    ],
-                  )),
+              QuizButtons(
+                controller: _controller,
+                currentIndex: currentIndex,
+                totalQuestions: questions.length,
+                answers: answers,
+                answerStatus: answerStatus,
+                questions: questions,
+                selectedAnswers: selectedAnswers,
+                onAnswersChanged: (index, answers) {
+                  setState(() {
+                    selectedAnswers[index] = answers;
+                  });
+                },
+              ),
             ],
           ),
         ],
